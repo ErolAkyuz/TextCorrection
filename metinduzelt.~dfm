@@ -1,0 +1,392 @@
+object Form1: TForm1
+  Left = 240
+  Top = 158
+  Width = 870
+  Height = 640
+  Caption = 'Form1'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Button1: TButton
+    Left = 200
+    Top = 560
+    Width = 75
+    Height = 25
+    Caption = 'Button1'
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+  object rich: TRichEdit
+    Left = 8
+    Top = 16
+    Width = 825
+    Height = 265
+    Lines.Strings = (
+      'unit softwarelistesi;'
+      ''
+      'interface'
+      ''
+      'uses'
+      
+        '  Windows, Messages, SysUtils, Variants, Classes, Graphics, Cont' +
+        'rols, Forms,'
+      
+        '  Dialogs, Grids, Wwdbigrd, Wwdbgrid, Buttons, ExtCtrls, StdCtrl' +
+        's, AppEvnts,'
+      
+        '  OleServer, Outlook2000,  shellapi,db, Wwdatsrc, DBTables, Wwqu' +
+        'ery,'
+      '  ImgList;'
+      ''
+      'type'
+      '  TSortOrder = (soASC, soDESC);'
+      ''
+      'type'
+      '  Tfmsoftwarelistesi = class(TForm)'
+      '    dbPclistesi: TwwDBGrid;'
+      '    Panel1: TPanel;'
+      '    SpeedButton1: TSpeedButton;'
+      '    btAc: TSpeedButton;'
+      '    SpeedButton3: TSpeedButton;'
+      '    SpeedButton9: TSpeedButton;'
+      '    Panel2: TPanel;'
+      '    SpeedButton7: TSpeedButton;'
+      '    SpeedButton4: TSpeedButton;'
+      '    Label1: TLabel;'
+      '    Label2: TLabel;'
+      '    Label3: TLabel;'
+      '    ImageList1: TImageList;'
+      '    procedure SpeedButton1Click(Sender: TObject);'
+      '    procedure SpeedButton7Click(Sender: TObject);'
+      '    procedure SpeedButton9Click(Sender: TObject);'
+      '    procedure btAcClick(Sender: TObject);'
+      '    procedure SpeedButton3Click(Sender: TObject);'
+      '    procedure FormKeyDown(Sender: TObject; var Key: Word;'
+      '      Shift: TShiftState);'
+      
+        '    procedure FormClose(Sender: TObject; var Action: TCloseActio' +
+        'n);'
+      '    procedure FormCreate(Sender: TObject);'
+      
+        '    procedure dbPclistesiCalcTitleImage(Sender: TObject; Field: ' +
+        'TField;'
+      '      var TitleImageAttributes: TwwTitleImageAttributes);'
+      '    procedure SpeedButton4Click(Sender: TObject);'
+      '    procedure FormShow(Sender: TObject);'
+      '    procedure dbPclistesiTopRowChanged(Sender: TObject);'
+      '    procedure dbPclistesiTitleButtonClick(Sender: TObject;'
+      '      AFieldName: String);'
+      '  private'
+      '     FActiveField : string;'
+      '     SortOrder   : TSortOrder;'
+      '    procedure SetActivefield(Value : String);'
+      '    procedure OpensoftwareCard (mode : integer);'
+      '    procedure OpenFindNextForm;'
+      '    procedure OpenFindNextFormseri;'
+      
+        '    procedure WMSyscommand(Var msg: TWmSysCommand);message WM_SY' +
+        'SCOMMAND;'
+      
+        '//    procedure  softwareprint(TestId : Longint; Preview : Boole' +
+        'an);'
+      '  published'
+      
+        '    property ActiveField : String read FActiveField write SetAct' +
+        'iveField;'
+      '  public'
+      '    Mode : Integer;'
+      '  end;'
+      ''
+      'var'
+      '  fmsoftwarelistesi: Tfmsoftwarelistesi;'
+      ''
+      'implementation'
+      ''
+      '{$R *.dfm}'
+      ''
+      'uses DM, software, giris, Boxes, softwaredurumu;'
+      ''
+      'const'
+      '  ReadOnly   = 1;'
+      '  ReadWrite  = 2;'
+      '  AddNew     = 3;'
+      ''
+      'procedure Tfmsoftwarelistesi.SpeedButton1Click(Sender: TObject);'
+      'begin'
+      '  fmGiris.NewSoftwareCard;'
+      'end;'
+      ''
+      'procedure Tfmsoftwarelistesi.SpeedButton7Click(Sender: TObject);'
+      '  begin'
+      '    close;'
+      '  end;'
+      ''
+      'procedure Tfmsoftwarelistesi.SpeedButton9Click(Sender: TObject);'
+      'var'
+      '  xSql : String;'
+      '  begin'
+      '    if Pos('#39'D'#39', YetkiAlani) = 0 then begin'
+      
+        '      ErrorBox('#39#304#351'lem Yap'#305'lamaz!'#39', '#39'Bu i'#351'lemi ger'#231'ekle'#351'tirmek i'#231 +
+        'in gerekli eri'#351'im hakk'#305'n'#305'z tan'#305'ml'#305' de'#287'il...'#39', '#39#39');'
+      '      Exit;'
+      '    end;'
+      '    if DMO.quSoftware.RecordCount > 0 then'
+      
+        '    if YesNoBox('#39'Kay'#305't silinecek?'#39', '#39'Kayd'#305' Silmek '#304'stedi'#287'inize E' +
+        'min misiniz?'#39', '#39#39') = idYes then begin'
+      
+        '      xSql := '#39'Delete From Software Where Kimlik = '#39' + DMO.quSof' +
+        'tware.FieldByName('#39'Kimlik'#39').asString;'
+      '      DMO.ExecuteQuery(xSql);'
+      '      DMO.quSoftware.Close;'
+      '      DMO.quSoftware.Open;'
+      'end;'
+      'end;'
+      ''
+      'procedure Tfmsoftwarelistesi.btAcClick(Sender: TObject);'
+      'begin'
+      ' OpenSoftwareCard(Readonly);'
+      'end;'
+      ''
+      'procedure Tfmsoftwarelistesi.SpeedButton3Click(Sender: TObject);'
+      'begin'
+      ' OpenSoftwareCard(ReadWrite);'
+      'end;'
+      ''
+      'procedure Tfmsoftwarelistesi.OpensoftwareCard;'
+      'var fmCard : Tfmsoftware;'
+      'begin'
+      
+        '  if (Mode = ReadWrite) and (Pos('#39'C'#39', YetkiAlani) = 0) then begi' +
+        'n'
+      '    if Pos('#39'*'#39', YetkiAlani) = 0 then begin'
+      
+        '      ErrorBox('#39#304#351'lem Yap'#305'lamaz!'#39', '#39'Bu i'#351'lemi ger'#231'ekle'#351'tirmek i'#231 +
+        'in gerekli eri'#351'im hakk'#305'n'#305'z tan'#305'ml'#305' de'#287'il...'#39', '#39#39');'
+      '      Exit;'
+      '    end;'
+      '  end;'
+      
+        '  if DMO.qusoftware.FieldByName('#39'Kimlik'#39').asInteger > 0 then beg' +
+        'in'
+      '    fmCard := Tfmsoftware.Create(Application);'
+      '    fmCard.Mode := Mode;'
+      
+        '    fmCard.Kimlik := DMO.qusoftware.FieldByName('#39'Kimlik'#39').asInte' +
+        'ger;'
+      '    if fmCard.ShowModal = mrOK then begin'
+      '      DMO.qusoftware.Close;'
+      '      DMO.qusoftware.Open;'
+      '    end;'
+      '    fmCard.Free;'
+      '  end;'
+      'end;'
+      ''
+      'procedure Tfmsoftwarelistesi.OpenFindNextForm;'
+      'var'
+      '  Sql, FThis, FindStr : String;'
+      '  Found : Boolean;'
+      'begin'
+      
+        '  FThis := uppercase (InputBox('#39'Domain  Arama'#39', '#39'Domain Ad'#305'  Ala' +
+        'ninda Aranacak Kelimeyi Giriniz :'#39', FindStr));'
+      '  Found := False;'
+      '  if FThis <> '#39#39' then begin'
+      '    FindStr := FThis;'
+      
+        '    Sql := '#39'Select * From software Where programadi like "%'#39' + F' +
+        'indStr + '#39'%"'#39';'
+      '    if DMO.OpenQuery(Sql) then begin'
+      
+        '      DMO.qusoftware.Locate('#39'Kimlik'#39', DMO.quActive.Fields[0].Val' +
+        'ue, []);'
+      '      Found := True;'
+      '    end;'
+      '    if not Found then begin'
+      
+        '      ErrorBox('#39'B U L U N A M A D I !!'#39', '#39'Aradiginiz ['#39' + FindSt' +
+        'r + '#39'] Kayitlar arasinda bulunamadi.'#39', '#39#39');'
+      '    end;'
+      '  end;'
+      'end;'
+      ''
+      
+        'procedure Tfmsoftwarelistesi.FormKeyDown(Sender: TObject; var Ke' +
+        'y: Word;'
+      '  Shift: TShiftState);'
+      'begin'
+      ' if ssCtrl in Shift then'
+      '    if Key = Ord('#39'F'#39') then'
+      '      OpenFindNextForm;'
+      ' if ssCtrl in Shift then'
+      '    if Key = Ord('#39'S'#39') then'
+      '      OpenFindNextFormseri;'
+      'end;'
+      ''
+      ''
+      'procedure Tfmsoftwarelistesi.OpenFindNextFormseri;'
+      'var'
+      '  Sql, FThis, FindStr : String;'
+      '  Found : Boolean;'
+      'begin'
+      
+        '  FThis := InputBox('#39'Domain  Arama'#39', '#39'Domainad'#305' Alaninda Aranaca' +
+        'k Kelimeyi Giriniz :'#39', FindStr);'
+      '  Found := False;'
+      '  if FThis <> '#39#39' then begin'
+      '    FindStr := FThis;'
+      
+        '    Sql := '#39'Select * From software Where programadi like "%'#39' + F' +
+        'indStr + '#39'%"'#39';'
+      '    if DMO.OpenQuery(Sql) then begin'
+      
+        '      DMO.qusoftware.Locate('#39'Kimlik'#39', DMO.quActive.Fields[0].Val' +
+        'ue, []);'
+      '      Found := True;'
+      '    end;'
+      '    if not Found then begin'
+      
+        '      ErrorBox('#39'B U L U N A M A D I !!'#39', '#39'Aradiginiz ['#39' + FindSt' +
+        'r + '#39'] Kayitlar arasinda bulunamadi.'#39', '#39#39');'
+      '    end;'
+      '  end;'
+      'end;'
+      ''
+      ''
+      ''
+      
+        'Procedure Tfmsoftwarelistesi.WMSyscommand(Var msg: TWmSysCommand' +
+        ');'
+      'Begin'
+      '    Case (msg.cmdtype and $FFF0) of'
+      '      SC_MAXIMIZE: Begin'
+      '        fmsoftwarelistesi.AlphaBlend := true;'
+      '        fmsoftwarelistesi.AlphaBlendValue := 255;'
+      '        End;'
+      '      SC_RESTORE: begin'
+      '        fmsoftwarelistesi.AlphaBlend := False;'
+      '        fmsoftwarelistesi.AlphaBlendValue := 255;'
+      '      end;'
+      '    End;'
+      
+        '    inherited; //i'#351'lem yapmas'#305'n'#305' istemiyorsan bu sat'#305'r'#305' kald'#305'r'#305'r' +
+        's'#305'n'
+      'End;'
+      ''
+      'procedure Tfmsoftwarelistesi.FormClose(Sender: TObject;'
+      '  var Action: TCloseAction);'
+      'begin'
+      '  fmgiris.Width := 648;'
+      '  fmgiris.Height := 552;'
+      'end;'
+      ''
+      'procedure Tfmsoftwarelistesi.FormCreate(Sender: TObject);'
+      'begin'
+      '  wpc := 0;'
+      '  SortOrder := soDESC;'
+      '  ActiveField := '#39'programadi'#39';'
+      '  if not DMO.qusoftware.Active then DMO.qusoftware.Open;'
+      'end;'
+      ''
+      ''
+      
+        'procedure Tfmsoftwarelistesi.dbPclistesiCalcTitleImage(Sender: T' +
+        'Object; Field: TField;'
+      '   var TitleImageAttributes: TwwTitleImageAttributes);'
+      'begin'
+      '  if Field.FieldName = ActiveField then begin'
+      
+        '    if SortOrder = soASC then TitleImageAttributes.imageIndex:= ' +
+        '0'
+      '    else TitleImageAttributes.imageIndex:= 1;'
+      '  end else TitleImageAttributes.imageIndex:= -1'
+      'end;'
+      ''
+      'procedure Tfmsoftwarelistesi.SpeedButton4Click(Sender: TObject);'
+      'begin'
+      
+        '//  softwareprint(DMO.qusoftware.FieldByName('#39'Kimlik'#39').asInteger' +
+        ', False);'
+      'end;'
+      ''
+      
+        '//procedure Tfmsoftwarelistesi.softwareprint(TestId : Longint; P' +
+        'review : Boolean);'
+      '//var'
+      '//  fmsoftwaretutanagi : Tfmsoftwaretutanagi;'
+      '//begin'
+      
+        '//  fmsoftwaretutanagi := Tfmsoftwaretutanagi.Create(Application' +
+        ');'
+      '//  with fmsoftwaretutanagi do begin'
+      '//    qusoftware.SQL.Clear;'
+      '//    qusoftware.SQL.Add('#39'Select * From software'#39');'
+      '//    qusoftware.Open;'
+      '//    qusoftware.First;'
+      '//  end;'
+      '//  if Preview then fmsoftwaretutanagi.QR.Preview'
+      '//  else fmsoftwaretutanagi.QR.Preview;'
+      '//  fmsoftwaretutanagi.Free;'
+      '//end;'
+      ''
+      ''
+      ''
+      ''
+      'procedure Tfmsoftwarelistesi.SetActivefield(Value : String);'
+      'var'
+      '  fsql : string;'
+      'begin'
+      '  FActiveField := Value;'
+      '  fsql := '#39'select * from software Order By '#39' + FActiveField;'
+      '  if SortOrder = soDESC then fsql := fsql + '#39' DESC'#39';'
+      '  DMO.qusoftware.SQL.Clear;'
+      '  DMO.qusoftware.SQL.Add(fsql);'
+      '  DMO.qusoftware.Open;'
+      'end;'
+      'procedure Tfmsoftwarelistesi.FormShow(Sender: TObject);'
+      'begin'
+      '  dmo.qusoftware.Close;'
+      '  dmo.qusoftware.Open;'
+      'end;'
+      ''
+      
+        'procedure Tfmsoftwarelistesi.dbPclistesiTopRowChanged(Sender: TO' +
+        'bject);'
+      'begin'
+      ' dbpclistesi.Invalidate;'
+      'end;'
+      ''
+      
+        'procedure Tfmsoftwarelistesi.dbPclistesiTitleButtonClick(Sender:' +
+        ' TObject;'
+      '  AFieldName: String);'
+      'begin'
+      '  if AFieldName = ActiveField then begin'
+      '    if SortOrder = soASC then SortOrder := soDESC'
+      '    else SortOrder := soASC;'
+      '  end;'
+      '  ActiveField := AFieldName;'
+      '  dbpclistesi.Invalidate;'
+      'end;'
+      ''
+      'end.')
+    ScrollBars = ssBoth
+    TabOrder = 1
+    WantTabs = True
+  end
+  object duzeltilmis: TRichEdit
+    Left = 8
+    Top = 296
+    Width = 817
+    Height = 241
+    ScrollBars = ssBoth
+    TabOrder = 2
+  end
+end
